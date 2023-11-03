@@ -1,7 +1,7 @@
 resource "aws_security_group" "example" {
-  name        = "example-serveur-web"
-  description = "Regles de securite pour le serveur web"
-  vpc_id      = aws_vpc.example.id
+  name        = var.security_group_name
+  description = var.security_group_description
+  vpc_id      = var.vpc_id
 
   ingress {
     from_port   = 80
@@ -14,7 +14,7 @@ resource "aws_security_group" "example" {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["${aws_instance.example3.private_ip}/32"]
+    cidr_blocks = ["${var.ssh_ingress_ip}/32"]
   }
 
   egress {
