@@ -14,7 +14,7 @@ resource "aws_security_group" "example" {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["${aws_instance.example3.private_ip}/32"]
+    cidr_blocks = var.ip_private_admin
   }
 
   egress {
