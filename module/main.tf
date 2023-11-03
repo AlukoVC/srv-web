@@ -11,11 +11,6 @@ module "network" {
 
 module "web_server" {
   source              = "./modules/web_server"
-  ami_id              = "ami-01bc990364452ab3e"  # Change this to your desired AMI
-  instance_type       = "t2.micro"
-  key_name            = "key-pair"  # Change this to your key pair name
-  subnet_id           = module.network.subnet_id
-  security_group_ids  = [module.network.security_group_id]  # Use the security group from the network module
   user_data_script    = <<-EOF_SCRIPT
                           #!/bin/bash -xe
                           yum update -y
@@ -35,5 +30,5 @@ module "web_server" {
                           EOF
                           service httpd restart
                           EOF_SCRIPT
-  instance_name       = "web-server-instance"
+  instance_name       = "srv-web1"
 }
