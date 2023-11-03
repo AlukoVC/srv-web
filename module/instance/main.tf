@@ -9,14 +9,6 @@ resource "aws_subnet" "example" {
   }
 }
 
-resource "aws_internet_gateway" "example" {
-  vpc_id = aws_vpc.example.id
-
-  tags = {
-    Name = "example-internet-gateway"
-  }
-}
-
 resource "aws_route_table" "example" {
   vpc_id = aws_vpc.example.id
 
