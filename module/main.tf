@@ -56,3 +56,17 @@ module "web_server" {
                           EOF_SCRIPT
   instance_name       = "srv-web2"
 }
+
+module "web_server" {
+  source              = "./modules/web_server"
+  instance_name       = "srv-admin"
+}
+
+module "security_group" {
+  source                      = "./modules/security_group"
+  security_group_name         = "example-serveur-web"
+  security_group_description  = "Regles de securite pour le serveur web"
+  vpc_id                      = module.network.vpc_id
+  ssh_ingress_ip              = "your_ip_here"  # Replace with your specific IP for SSH ingress
+}
+
