@@ -6,7 +6,7 @@ resource "aws_instance" "example" {
   security_groups = var.security_group_ids
 
   tags = {
-    Name = "srv-web"
+    Name = var.instance_name
   }
 
   user_data = var.user_data_script
