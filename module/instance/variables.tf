@@ -8,16 +8,6 @@ variable "instance_name" {
   default     = "srv-web"
 }
 
-variable "instance_name2" {
-  description = "Nom de l'instance EC2"
-  default     = "srv-web2"
-}
-
-variable "instance_name3" {
-  description = "Nom de l'instance EC2"
-  default     = "srv-admin"
-}
-
 variable "instance_type" {
   description = "Type d'instance EC2"
   default     = "t2.micro"
@@ -58,13 +48,5 @@ variable "user_data_script" {
               </VirtualHost>
               EOF
               service httpd restart
-              EOF_SCRIPT
-}
-
-variable "user_data_script2" {
-  description = "Script de démarrage de l'instance EC2"
-  default = <<-EOF_SCRIPT
-              #!/bin/bash -xe
-              yum update -y
               EOF_SCRIPT
 }
