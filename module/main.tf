@@ -32,3 +32,27 @@ module "web_server" {
                           EOF_SCRIPT
   instance_name       = "srv-web1"
 }
+
+module "web_server" {
+  source              = "./modules/web_server"
+  user_data_script    = <<-EOF_SCRIPT
+                          #!/bin/bash -xe
+                          yum update -y
+                          yum install -y httpd git
+                          service httpd start
+                          chkconfig httpd on
+                          git clone https://bitbucket.org/fhoubart/testphaser_aws.git /var/www/html/testphaser_aws
+                          cat <<EOF >> /etc/httpd/conf/httpd.conf
+                          <VirtualHost *:80>
+                              DocumentRoot "/var/www/html/testphaser_aws/public_html/"
+                              <Directory "/var/www/html/testphaser_aws/public_html/">
+                                  Options Indexes FollowSymLinks
+                                  AllowOverride All
+                                  Require all granted
+                              </Directory>
+                          </VirtualHost>
+                          EOF
+                          service httpd restart
+                          EOF_SCRIPT
+  instance_name       = "srv-web2"
+}
