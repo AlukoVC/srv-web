@@ -1,5 +1,5 @@
 resource "aws_vpc" "example" {
-  cidr_block = "10.0.0.0/16"
+  cidr_block = var.vpc_cidr_block
   enable_dns_support = true
   enable_dns_hostnames = true
 
@@ -8,27 +8,22 @@ resource "aws_vpc" "example" {
   }
 }
 
+resource "aws_subnet" "example" {
+  vpc_id                  = aws_vpc.example.id
+  cidr_block              = var.subnet_cidr_block
+  availability_zone       = var.availability_zone
+  map_public_ip_on_launch = true
+
+  tags = {
+    Name = "example-subnet"
+  }
+}
+
 resource "aws_internet_gateway" "example" {
   vpc_id = aws_vpc.example.id
 
   tags = {
     Name = "example-internet-gateway"
-  }
-}
-
-resource "aws_route_table_association" "example" {
-  subnet_id      = aws_subnet.example.id
-  route_table_id = aws_route_table.example.id
-}
-
-resource "aws_subnet" "example" {
-  vpc_id                  = aws_vpc.example.id
-  cidr_block              = "10.0.1.0/24"
-  availability_zone       = "us-east-1a" 
-  map_public_ip_on_launch = true
-
-  tags = {
-    Name = "example-subnet"
   }
 }
 
@@ -41,7 +36,7 @@ resource "aws_route_table" "example" {
 }
 
 resource "aws_route" "example" {
-  route_table_id            = aws_route_table.example.id
-  destination_cidr_block    = "0.0.0.0/0"
-  gateway_id                = aws_internet_gateway.example.id
+  route_table_id         = aws_route_table.example.id
+  destination_cidr_block = "0.0.0.0/0"
+  gateway_id             = aws_internet_gateway.example.id
 }
