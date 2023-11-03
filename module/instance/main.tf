@@ -1,13 +1,3 @@
-resource "aws_vpc" "example" {
-  cidr_block = var.vpc_cidr_block
-  enable_dns_support = true
-  enable_dns_hostnames = true
-
-  tags = {
-    Name = "example-vpc"
-  }
-}
-
 resource "aws_subnet" "example" {
   vpc_id                  = aws_vpc.example.id
   cidr_block              = var.subnet_cidr_block
